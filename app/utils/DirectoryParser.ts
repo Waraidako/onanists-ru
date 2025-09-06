@@ -14,6 +14,7 @@ export default function parseDirectories(localPath: string): string[] {
 
 export function parseNoteFileNames(localPath: string): string[] {
     const rootPath = path.join(process.cwd(), 'public/files/', decodeURIComponent(localPath));
+    if (!fs.existsSync(rootPath)) return [];
     const readRoot = fs.readdirSync(rootPath, { withFileTypes: true });
     const result: string[] = [];
     const filesOnly = readRoot.filter(file => file.isFile()).map(file => file.name);

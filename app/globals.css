@@ -60,7 +60,13 @@ body {
 }
 
 a {
-  color: #287cff
+  color: #287cff;
+}
+
+.logo {
+  color: #ededed;
+  -webkit-text-stroke: 5px #202020;
+  paint-order: stroke fill;
 }
 
 span {
