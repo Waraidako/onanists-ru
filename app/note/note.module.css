@@ -1,4 +1,6 @@
 .note {
     font-family: --font-montserrat, sans-serif;
     max-width: 50em;
+    margin-left: 2em;
+    margin-right: 2em;
 }
