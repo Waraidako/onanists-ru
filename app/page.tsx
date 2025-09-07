@@ -6,7 +6,7 @@ const directories: string[] = parseDirectories('files').sort();
 
 export default function Home() {
   return (
-      <div className="p-3 flex-col justify-items-center">
+      <div className="m-[1.5em] flex-col justify-items-center">
           {
               directories.map(((directory: string, index: number) => (
                   <Subject key={index} subjectName={directory} />
