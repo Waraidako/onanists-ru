@@ -54,7 +54,7 @@ export default function Subject({subjectName}: {subjectName:string}) {
                     data.map((filename:string, index: number) => {
                         const themedFilename = filename + (currentTheme == 'dark' ? ' darkmode' : ' lightmode');
                         return(
-                            <HrefBlock key={index} name={filename} href_html={`files/${subjectName}/${themedFilename}${html_ext}`} href_pdf={`files/${subjectName}/${themedFilename}${pdf_ext}`} />
+                            <HrefBlock key={index} name={filename} href_html={`note?path=${subjectName}/${filename}${html_ext}`} href_pdf={`files/${subjectName}/${themedFilename}${pdf_ext}`} />
                     )})
                 }
             </div>

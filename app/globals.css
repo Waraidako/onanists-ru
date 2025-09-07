@@ -74,11 +74,6 @@ span {
   overflow: hidden;
 }
 
-section > * {
-  padding: 0;
-  margin: 0;
-}
-
 button {
   transition: background-color 0.3s, color 0.3s;
 }
@@ -129,3 +124,84 @@ button {
   margin-right: auto;
 }
 
+@font-face {
+  font-family: math-font;
+  src: url(https://fred-wang.github.io/MathFonts/TeXGyreSchola/texgyreschola-math.woff2);
+}
+
+math {
+  font-family: math-font;
+}
+
+table {
+  margin: 1em 0 1em 0;
+}
+
+table, tr, th, td {
+  border: 1px solid #474747;
+  border-collapse: collapse;
+  text-align: left;
+  vertical-align: top;
+}
+
+img {
+  max-width: 100%;
+}
+
+ol, ul, menu {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 2.5em;
+  list-style: initial;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-top: 0;
+  list-style-type: circle;
+}
+
+p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: bold;
+  font-family: Monocraft;
+  flex: 1;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: Monocraft;
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  font-family: Monocraft;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: Monocraft;
+}
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-family: Monocraft;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: Monocraft;
+}

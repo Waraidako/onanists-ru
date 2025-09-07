@@ -1,11 +1,10 @@
-import { NextResponse } from 'next/server';
 import { parseNoteFileNames } from "@/app/utils/DirectoryParser";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const dirName: string | null = searchParams.get("dir");
     if (!dirName) {
-        return NextResponse.json({ status: 400, statusText: "No directory name provided" });
+        return Response.json({ status: 400, statusText: "No directory name provided" });
     }
     const data: string[] = parseNoteFileNames(decodeURIComponent(dirName));
     if (!data) return Response.json({status: 404, statusText: "Directory not found"});

@@ -138,6 +138,7 @@ async function processFile(filepath: string): Promise<void> {
         let convertedDarkmode = converted_html;
         const darkmodeHtml = html_filepath.replace('.html', ' darkmode.html');
         const lightmodeHtml = html_filepath.replace('.html', ' lightmode.html');
+        fs.writeFileSync(filepath, converted_html);
 
         // Change pictures to darkmodded where applicable
         const html: string = '';
