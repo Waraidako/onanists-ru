@@ -31,7 +31,7 @@ export default function Page() {
         <div className={"flex justify-center"}>
             <div>
                 <h1 className={"flex justify-center"}>{noteName!.split('/')[0]}</h1>
-                <h1 className={"flex justify-center"}>{noteName!.split('/')[1].slice(0, -5)}</h1>
+                <h2 className={"flex justify-center"}>{noteName!.split('/')[1].slice(0, -5)}</h2>
                 {
                     note
                         ? <div dangerouslySetInnerHTML={{__html: note}} className={styles.note} />
