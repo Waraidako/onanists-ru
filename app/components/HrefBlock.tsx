@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default function HrefBlock({name, href_html, href_pdf}: {name: string; href_html: string, href_pdf: string}) {
+export default function HrefBlock({name, href_html}: {name: string; href_html: string, href_pdf: string}) {
     return (
         <div className="flex w-full">
             <div className="w-1/2 flex items-center justify-self-start">{name}</div>
