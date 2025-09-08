@@ -141,21 +141,21 @@ async function processFile(filepath: string): Promise<void> {
         fs.writeFileSync(filepath, converted_html);
 
         // Change pictures to darkmodded where applicable
-        const html: string = '';
-        const dom = new JSDOM(html);
-        const document = dom.window.document;
-        const dummy: HTMLHtmlElement = document.createElement('html');
-        dummy.innerHTML = convertedDarkmode;
-        const allImages = dummy.getElementsByTagName('img');
-        for (let i: number = 0; i < allImages.length; i++) {
-            // ^ Know it's suboptimal, dgaf
-            const imgPath = filepath.split('/').slice(0, -1).join('/') + '/' + decodeURIComponent(allImages[i].src);
-            if (!(ignored(imgPath) || await isDark(imgPath))) {
-                const dotIndex = allImages[i].src.lastIndexOf('.');
-                allImages[i].src = allImages[i].src.slice(0,dotIndex) + ' darkmode' + allImages[i].src.slice(dotIndex);
-            }
-        }
-        convertedDarkmode = dummy.innerHTML.toString();
+        // const html: string = '';
+        // const dom = new JSDOM(html);
+        // const document = dom.window.document;
+        // const dummy: HTMLHtmlElement = document.createElement('html');
+        // dummy.innerHTML = convertedDarkmode;
+        // const allImages = dummy.getElementsByTagName('img');
+        // for (let i: number = 0; i < allImages.length; i++) {
+        //     // ^ Know it's suboptimal, dgaf
+        //     const imgPath = filepath.split('/').slice(0, -1).join('/') + '/' + decodeURIComponent(allImages[i].src);
+        //     if (!(ignored(imgPath) || await isDark(imgPath))) {
+        //         const dotIndex = allImages[i].src.lastIndexOf('.');
+        //         allImages[i].src = allImages[i].src.slice(0,dotIndex) + ' darkmode' + allImages[i].src.slice(dotIndex);
+        //     }
+        // }
+        // convertedDarkmode = dummy.innerHTML.toString();
 
         fs.writeFileSync(lightmodeHtml, fs.readFileSync('./app/utils/headers/lightmodeHeader.txt', 'utf8') + converted_html);
         fs.writeFileSync(darkmodeHtml, fs.readFileSync('./app/utils/headers/darkmodeHeader.txt', 'utf8') + convertedDarkmode);
