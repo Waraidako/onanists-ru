@@ -13,14 +13,5 @@ export async function GET(request: Request) {
     }
     const note: string = fs.readFileSync(noteAbsolutePath, 'utf8');
 
-    // Append all the img src's to get local paths
-    // const parser = new DOMParser();
-    // const html = parser.parseFromString(note, 'text/html');
-    // html.querySelectorAll('img').forEach(async (img) => {
-    //     const imageName = img.getAttribute('src');
-    //     const request = await fetch('/api/get-image-path?img=' + encodeURIComponent(imageName!));
-    //     const json = await request.json();
-    // })
-
     return Response.json({ status: 200, statusText: "OK", noteText: note});
 }

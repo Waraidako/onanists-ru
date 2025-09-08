@@ -29,11 +29,15 @@ export default function Page() {
 
     return (
         <div className={"flex justify-center"}>
-            {
-                note
-                ? <div dangerouslySetInnerHTML={{__html: note}} className={styles.note} />
-                : <div className={"flex justify-center items-center"}>Loading please wait... 100%</div>
-            }
+            <div>
+                <h1 className={"flex justify-center"}>{noteName!.split('/')[0]}</h1>
+                <h1 className={"flex justify-center"}>{noteName!.split('/')[1].slice(0, -5)}</h1>
+                {
+                    note
+                        ? <div dangerouslySetInnerHTML={{__html: note}} className={styles.note} />
+                        : <div className={"flex justify-center items-center"}>Loading please wait... 100%</div>
+                }
+            </div>
         </div>
     )
 }
