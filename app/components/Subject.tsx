@@ -50,6 +50,7 @@ export default function Subject({subjectName}: {subjectName:string}) {
     return (
         <Collapse name={subjectName}>
             <div className="flex-col w-full text-[15px] mt-2 mb-2">
+                <div className="mr-1 pb-1 justify-items-center h-full"><a href={"/full-subject?subject=" + encodeURIComponent(subjectName)}><button className="hrefbutton allbutton w-full" role="button">Всё разом</button></a></div>
                 {
                     data.map((filename:string, index: number) => {
                         const themedFilename = filename + (currentTheme == 'dark' ? ' darkmode' : ' lightmode');

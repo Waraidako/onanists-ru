@@ -9,7 +9,6 @@ import { useState } from "react";
 export default function Page() {
     const params  = useSearchParams();
     const noteName: string | null = params.get("path");
-    //const noteName = "Stonks 101/README darkmode.html";
     if (!noteName) {
         window.location.replace('/piss');
     }
@@ -24,7 +23,9 @@ export default function Page() {
     }
 
     useEffect(() => {
-        fetchData();
+        if (!note) {
+            fetchData();
+        }
     })
 
     return (

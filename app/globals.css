@@ -109,6 +109,10 @@ button {
   scale: 3;
 }
 
+.allbutton:hover::before {
+  scale: 15;
+}
+
 .hrefbutton:hover {
   color: var(--background);
   scale: 1.1;
