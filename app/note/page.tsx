@@ -47,29 +47,30 @@ export default function Page() {
                 <h2 className={"flex justify-center"}>{notePath!.split('/')[1].slice(0, -5)}</h2>
                 {
                     note
-                        ? <div dangerouslySetInnerHTML={{__html: note}} className={styles.note} />
+                        ? <div className={styles.note}>
+                            <div dangerouslySetInnerHTML={{__html: note}} />
+                            <div className={"flex w-full"}>
+                                {
+                                    prevPath
+                                        ? <div className="flex w-1/2 mr-1 justify-center">
+                                            <a href={`note?path=${prevPath}`} className={"nextprevbutton w-full"}>&lt;-</a>
+                                        </div>
+                                        : <div className={"flex w-1/2 mr-1 justify-center"} />
+                                }
+                                {
+                                    nextPath
+                                        ? <div className="flex w-1/2 ml-1 justify-center">
+                                            <a href={`note?path=${nextPath}`} className={"nextprevbutton w-full"}>
+                                                -&gt;
+                                            </a>
+                                        </div>
+                                        : <div className={"flex w-1/2 lr-1 justify-center"} />
+                                }
+                            </div>
+                          </div>
                         : <div className={"flex justify-center items-center"}>Loading please wait... 100%</div>
                 }
-                <div className={"flex w-full ml-[1.5em] mr-[1.5em]"}>
-                {
-                    prevPath
-                        ? <div className="flex w-1/2 mr-1 justify-center">
-                            <a href={`note?path=${prevPath}`}>
-                                <button className={"nextprevbutton"}>&lt;- Предыдущий конспект</button>
-                            </a>
-                          </div>
-                        : <div className={"flex w-1/2 justify-center"} />
-                }
-                {
-                    nextPath
-                        ? <div className="flex w-1/2 ml-1 justify-center">
-                            <a href={`note?path=${nextPath}`}>
-                                <button className={"nextprevbutton w-full"}>Следующий конспект -&gt;</button>
-                            </a>
-                          </div>
-                        : null
-                }
-                        </div>
+
             </div>
         </div>
     )
