@@ -47,7 +47,7 @@ export default function RootLayout({
         <Suspense>{children}</Suspense>
         <footer className={"flex w-full"}>
             <div className={"justify-start items-center m-2"}>
-                <a href={"https://archive.onanists.ru"} className={"align-middle"}>
+                <a href={"https://archive.onanists.ru"} className={"align-middle font-montserrat"}>
                     Прошлый семестр - переживи травмы ещё разочек
                 </a>
             </div>

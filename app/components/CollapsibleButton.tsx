@@ -14,7 +14,7 @@ export default function Collapse({name, children}: Props) {
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
     const correctedName =  name ? name : "YOU DONE FUCKED UP";
     return (
-        <div className="collapsible flex-col items-center w-full justify-between mt-2 mb-4 max-w-180">
+        <div className="collapsible flex-col items-center w-full justify-between mt-2 mb-4 max-w-180 font-montserrat">
             <button {...getToggleProps() } className="header flex items-center justify-between w-full rounded text-xl font-bold">
                 {correctedName}
                 { isExpanded ? <UpArrow /> : <DownArrow /> }
