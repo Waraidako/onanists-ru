@@ -1,4 +1,5 @@
-import { parseNoteFileNames } from "@/app/utils/DirectoryParser";
+//import { parseNoteFileNames } from "@/app/utils/DirectoryParser";
+import { Obsidian } from "../../utils/obsidian";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -6,7 +7,19 @@ export async function GET(request: Request) {
     if (!dirName) {
         return Response.json({ status: 400, statusText: "No directory name provided" });
     }
-    const data: string[] = parseNoteFileNames(decodeURIComponent(dirName));
+
+    const obsidian = new Obsidian("https://onanists:onanists123@obsidian.servermaksa.ru");
+    const data: string[] = [];
+    const allPaths: string[] = await obsidian.getAllFilesList();
+    allPaths.forEach((path: string) => {
+        const splitPath = path.split("/");
+        if (splitPath.length < 2) { return; }
+        if (splitPath[0] === dirName && splitPath[1] !== "Пикчи") {
+            data.push(splitPath[1].split(".").slice(0, -1).join("."));
+        }
+    })
+
+    //const data: string[] = parseNoteFileNames(decodeURIComponent(dirName));
     if (!data) return Response.json({status: 404, statusText: "Directory not found"});
     const noteFilenames = data.sort((a: string, b: string): number => {
         if (a.startsWith('README')) return -1;
