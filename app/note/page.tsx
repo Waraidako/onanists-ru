@@ -57,6 +57,9 @@ export default function Page()  {
         if (noteIndex < filenames.length - 1) setNextPath(subject + '/' + filenames[noteIndex + 1] + '.html');
     }
 
+    marked.use(markedKatex(KatexOptions));
+    marked.setOptions(options);
+
     useEffect(() => {
         fetchData();
     }, [])
