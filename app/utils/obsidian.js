@@ -19,13 +19,13 @@ export class Obsidian {
                 Buffer.from(child["doc"]["data"], "base64").copy(data, writtenSize)
                 writtenSize += child["size"]
             }
-            return data
+            return data;
         } else if (base["type"] === "plain") {
             let data = ""
             for (const child of children.rows) {
                 data += child["doc"]["data"];
             }
-            return data
+            return data;
         } else {
             throw new Error('Unknown document type');
         }

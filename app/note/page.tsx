@@ -1,12 +1,33 @@
 "use client"
 
 import styles from "./note.module.css";
-
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
+import { marked } from 'marked';
+import markedKatex from 'marked-katex-extension';
 
-export default function Page() {
+const renderHeader = `
+<DOCTYPE html>
+<meta charset="UTF-8">
+    <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" 
+    integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" 
+    crossorigin="anonymous"
+    />
+`
+
+const KatexOptions = {
+    throwOnError: true,
+}
+
+const options = {
+    gfm: true,
+    breaks: true
+}
+
+export default function Page()  {
     const params  = useSearchParams();
     const notePath: string | null = params.get("path");
     if (!notePath) {
@@ -48,7 +69,7 @@ export default function Page() {
                 {
                     note
                         ? <div className={styles.note}>
-                            <div dangerouslySetInnerHTML={{__html: note}} />
+                            <div dangerouslySetInnerHTML={{__html: renderHeader + marked.parse(note)}} />
                             <div className={"flex w-full"}>
                                 {
                                     prevPath
