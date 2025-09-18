@@ -1,6 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-import { Obsidian } from './../../utils/obsidian';
+import { Obsidian } from '@/app/utils/obsidian';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -9,7 +7,6 @@ export async function GET(request: Request) {
     if (!notePath) {
         return Response.json({ status: 400, statusText: "Note name not provided" });
     }
-    console.log('Trying to get note with path:' + decodeURIComponent(notePath) + '.md');
     const note = (await obsidian.getFile(decodeURIComponent(notePath) + '.md')).toString();
     if (!note) {
         return Response.json({ status: 404, statusText: "Note not found" });

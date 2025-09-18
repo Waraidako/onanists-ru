@@ -1,10 +1,19 @@
 "use client"
 
 import styles from './full-subject.module.css';
-
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { marked } from 'marked';
+import markedKatex from 'marked-katex-extension';
 
+const KatexOptions = {
+    throwOnError: true,
+}
+
+const options = {
+    gfm: true,
+    breaks: true,
+}
 
 export default function Page() {
 
@@ -24,7 +33,7 @@ export default function Page() {
         setNoteNamesArray(noteNames);
 
         const notesPromises = noteNames.map(async (noteName: string) => {
-            const req = await fetch('/api/get-note?path=' + encodeURIComponent(subjectName + '/' + noteName + '.html'));
+            const req = await fetch('/api/get-note?path=' + encodeURIComponent(subjectName + '/' + noteName));
             const notejson = await req.json();
             return notejson.noteText;
         })
@@ -37,20 +46,22 @@ export default function Page() {
         fetchData();
     }, []);
 
+    marked.use(markedKatex(KatexOptions));
+    marked.setOptions(options);
+
     return (
         <div className={"flex justify-center"}>
             <div>
             <h1 className={"flex justify-center"}>{subjectName}</h1>
             {
-                    noteNamesArray.map((noteName: string, index: number) => {
-                        return (
-                            <div key={index}>
-                                <h2 className={"flex justify-center"}>{noteName}</h2>
-
-                                <div dangerouslySetInnerHTML={{__html: notesArray[index]}} className={styles.fullsubject}/>
-                            </div>
-                        )
-                    })
+                noteNamesArray.map((noteName: string, index: number) => {
+                    return (
+                        <div key={index}>
+                            <h2 className={"flex justify-center"}>{noteName}</h2>
+                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? marked.parse(notesArray[index]) : ""}} className={styles.fullsubject}/>
+                        </div>
+                    )
+                })
             }
             </div>
         </div>

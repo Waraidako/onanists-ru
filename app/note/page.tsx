@@ -7,10 +7,7 @@ import { useState } from "react";
 import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 
-const renderHeader = `
-<DOCTYPE html>
-<meta charset="UTF-8">
-    <link 
+const renderHeader = `<link 
     rel="stylesheet" 
     href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" 
     integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" 
@@ -24,7 +21,7 @@ const KatexOptions = {
 
 const options = {
     gfm: true,
-    breaks: true
+    breaks: true,
 }
 
 export default function Page()  {
@@ -48,17 +45,26 @@ export default function Page()  {
         request = await fetch('api/get-filenames?dir=' + encodeURIComponent(subject));
         json = await request.json();
         const filenames = json.files;
-        const noteName = notePath!.split('/')[1].split('.').slice(0, -1).join('.');
+        const noteName = notePath!.split('/')[1];
         const noteIndex = filenames.indexOf(noteName);
-        console.log(noteIndex);
-        console.log(filenames);
-        console.log(noteName);
-        if (noteIndex > 0) setPrevPath(subject + '/' + filenames[noteIndex - 1] + '.html')
-        if (noteIndex < filenames.length - 1) setNextPath(subject + '/' + filenames[noteIndex + 1] + '.html');
+        if (noteIndex > 0) setPrevPath(subject + '/' + filenames[noteIndex - 1])
+        if (noteIndex < filenames.length - 1) setNextPath(subject + '/' + filenames[noteIndex + 1]);
     }
 
     marked.use(markedKatex(KatexOptions));
     marked.setOptions(options);
+
+    function appendLinks(note: string): string {
+        const parser = new DOMParser();
+        const parsedHTML = parser.parseFromString(note, 'text/html');
+        Array.from(parsedHTML.getElementsByTagName('img')).forEach((img) => {
+            const nonAppendedLink: string = img.getAttribute('src')!;
+            const appendedLink: string = "https://onanists:onanists123@obsidian.servermaksa.ru/" + notePath!.split('/')[0] + '/' + nonAppendedLink;
+            img.setAttribute('src', appendedLink);
+        });
+
+        return parsedHTML.documentElement.outerHTML;
+    }
 
     useEffect(() => {
         fetchData();
@@ -68,11 +74,12 @@ export default function Page()  {
         <div className={"flex justify-center"}>
             <div className={styles.note}>
                 <h1 className={"flex justify-center"}>{notePath!.split('/')[0]}</h1>
-                <h2 className={"flex justify-center"}>{notePath!.split('/')[1].slice(0, -5)}</h2>
+                <h2 className={"flex justify-center"}>{notePath!.split('/')[1]}</h2>
                 {
                     note
-                        ? <div className={styles.note}>
-                            <div dangerouslySetInnerHTML={{__html: renderHeader + marked.parse(note)}} />
+                        ?
+                            <div className={styles.note}>
+                            <div dangerouslySetInnerHTML={{__html: renderHeader + appendLinks(marked.parse(note, { async: false }))}} />
                             <div className={"flex w-full"}>
                                 {
                                     prevPath

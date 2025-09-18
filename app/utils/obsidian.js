@@ -1,5 +1,5 @@
 import Nano from "nano";
-import { createWriteStream } from "fs";
+//import { createWriteStream } from "fs";
 
 export class Obsidian {
     db;
@@ -31,23 +31,23 @@ export class Obsidian {
         }
     }
 
-    async saveFile(db_path, fs_path) {
-        const base = await this.db.get(db_path.toLowerCase())
-        const children = await this.db.fetch({ keys: base["children"] });
-        if (base["type"] === "newnote") {
-            const stream = createWriteStream(fs_path);
-            for (const child of children.rows) {
-                stream.write(Buffer.from(child["doc"]["data"], "base64"))
-            }
-        } else if (base["type"] === "plain") {
-            const stream = createWriteStream(fs_path);
-            for (const child of children.rows) {
-                stream.write(child["doc"]["data"], "utf-8");
-            }
-        } else {
-            throw new Error('Unknown document type');
-        }
-    }
+    // async saveFile(db_path, fs_path) {
+    //     const base = await this.db.get(db_path.toLowerCase())
+    //     const children = await this.db.fetch({ keys: base["children"] });
+    //     if (base["type"] === "newnote") {
+    //         const stream = createWriteStream(fs_path);
+    //         for (const child of children.rows) {
+    //             stream.write(Buffer.from(child["doc"]["data"], "base64"))
+    //         }
+    //     } else if (base["type"] === "plain") {
+    //         const stream = createWriteStream(fs_path);
+    //         for (const child of children.rows) {
+    //             stream.write(child["doc"]["data"], "utf-8");
+    //         }
+    //     } else {
+    //         throw new Error('Unknown document type');
+    //     }
+    // }
 
     async getUpdatedFilesList(after){
         const result = await this.db.find({

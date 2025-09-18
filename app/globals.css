@@ -69,11 +69,6 @@ a {
   paint-order: stroke fill;
 }
 
-span {
-  flex: 1;
-  overflow: hidden;
-}
-
 button {
   transition: background-color 0.3s, color 0.3s;
 }
