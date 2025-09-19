@@ -24,6 +24,8 @@ const options = {
     breaks: true,
 }
 
+
+
 export default function Page()  {
     const params  = useSearchParams();
     const notePath: string | null = params.get("path");
@@ -35,15 +37,18 @@ export default function Page()  {
     const [ nextPath, setNextPath ] = useState('');
     const [ prevPath, setPrevPath ] = useState('');
 
-    const fetchData = async () => {
-        let request = await fetch('/api/get-note?path=' + encodeURIComponent(notePath!));
-        let json = await request.json();
+    const getNote = async () => {
+        const request = await fetch('/api/get-note?path=' + encodeURIComponent(notePath!));
+        const json = await request.json();
         const noteText = json.noteText;
         setNote(noteText);
+    }
 
+    const fetchData = async () => {
+        await getNote();
         const subject = notePath!.split('/')[0];
-        request = await fetch('api/get-filenames?dir=' + encodeURIComponent(subject));
-        json = await request.json();
+        const request = await fetch('api/get-filenames?dir=' + encodeURIComponent(subject));
+        const json = await request.json();
         const filenames = json.files;
         const noteName = notePath!.split('/')[1];
         const noteIndex = filenames.indexOf(noteName);
@@ -68,7 +73,12 @@ export default function Page()  {
 
     useEffect(() => {
         fetchData();
+        
+        const interval = setInterval(getNote, 750);
+        return () => clearInterval(interval);
     }, [])
+
+    
 
     return (
         <div className={"flex justify-center"}>
