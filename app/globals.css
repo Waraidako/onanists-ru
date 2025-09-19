@@ -136,6 +136,10 @@ table {
   margin: 1em 0 1em 0;
 }
 
+tr, th, td {
+    padding: 8px;
+}
+
 table, tr, th, td {
   border: 1px solid #474747;
   border-collapse: collapse;
