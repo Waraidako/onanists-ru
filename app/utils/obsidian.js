@@ -19,7 +19,6 @@ export class Obsidian {
                 const buffer = Buffer.from(child["doc"]["data"], "base64")
                 buffer.copy(data, writtenSize)
                 writtenSize += buffer.length
-                console.log(writtenSize)
             }
             return data;
         } else if (base["type"] === "plain") {
