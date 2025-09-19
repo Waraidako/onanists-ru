@@ -13,7 +13,7 @@ console.log(await obsidian.getFile("Маршрутка/Пикчи/er_min.jpg"));
 console.log("printing a file...")
 console.log(await obsidian.getFile("Readme.md"));
 
-console.log("saving a file...")
-await obsidian.saveFile("Маршрутка/Пикчи/er_min.jpg","test_image.jpg");
-console.log("saving a file...")
-await obsidian.saveFile("Readme.md","test_text.md");
+// console.log("saving a file...")
+// await obsidian.saveFile("Маршрутка/Пикчи/er_min.jpg","test_image.jpg");
+// console.log("saving a file...")
+// await obsidian.saveFile("Readme.md","test_text.md");

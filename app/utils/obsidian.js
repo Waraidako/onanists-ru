@@ -16,8 +16,10 @@ export class Obsidian {
             const data = Buffer.alloc(base["size"])
             let writtenSize = 0;
             for (const child of children.rows) {
-                Buffer.from(child["doc"]["data"], "base64").copy(data, writtenSize)
-                writtenSize += child["size"]
+                const buffer = Buffer.from(child["doc"]["data"], "base64")
+                buffer.copy(data, writtenSize)
+                writtenSize += buffer.length
+                console.log(writtenSize)
             }
             return data;
         } else if (base["type"] === "plain") {
@@ -85,3 +87,4 @@ export class Obsidian {
         return await this.getUpdatedFilesList(new Date("2001-09-11T00:00:00"));
     }
 }
+

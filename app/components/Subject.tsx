@@ -5,7 +5,6 @@ import HrefBlock from "@/app/components/HrefBlock";
 import React from "react";
 import { useState, useEffect } from "react";
 
-const html_ext = '.html';
 const pdf_ext = '.pdf';
 
 export default function Subject({subjectName, filenames}: {subjectName:string, filenames:string[]}) {

@@ -59,7 +59,7 @@ export default function Page()  {
         const parsedHTML = parser.parseFromString(note, 'text/html');
         Array.from(parsedHTML.getElementsByTagName('img')).forEach((img) => {
             const nonAppendedLink: string = img.getAttribute('src')!;
-            const appendedLink: string = "https://onanists:onanists123@obsidian.servermaksa.ru/" + notePath!.split('/')[0] + '/' + nonAppendedLink;
+            const appendedLink: string = "/api/get-picture?path=" + notePath!.split('/')[0] + '/' + nonAppendedLink;
             img.setAttribute('src', appendedLink);
         });
 
