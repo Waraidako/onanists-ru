@@ -6,6 +6,14 @@ import { useState, useEffect } from 'react';
 import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 
+const renderHeader = `<link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" 
+    integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" 
+    crossorigin="anonymous"
+    />
+`
+
 const KatexOptions = {
     throwOnError: true,
 }
@@ -49,6 +57,18 @@ export default function Page() {
     marked.use(markedKatex(KatexOptions));
     marked.setOptions(options);
 
+    function appendLinks(note: string): string {
+        const parser = new DOMParser();
+        const parsedHTML = parser.parseFromString(note, 'text/html');
+        Array.from(parsedHTML.getElementsByTagName('img')).forEach((img) => {
+            const nonAppendedLink: string = img.getAttribute('src')!;
+            const appendedLink: string = "/api/get-picture?path=" + subjectName + '/' + nonAppendedLink;
+            img.setAttribute('src', appendedLink);
+        });
+
+        return parsedHTML.documentElement.outerHTML;
+    }
+
     return (
         <div className={"flex justify-center"}>
             <div>
@@ -58,7 +78,7 @@ export default function Page() {
                     return (
                         <div key={index}>
                             <h2 className={"flex justify-center"}>{noteName}</h2>
-                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? marked.parse(notesArray[index]) : ""}} className={styles.fullsubject}/>
+                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : ""}} className={styles.fullsubject}/>
                         </div>
                     )
                 })
