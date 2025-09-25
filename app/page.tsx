@@ -1,5 +1,8 @@
-import React from 'react';
+export const dynamic = 'force-dynamic';
+
+import React, { Suspense } from 'react';
 import Subject from "@/app/components/Subject";
+import Loading from '@/app/components/Loading';
 
 function SubjectList({ directories }: { directories: Map<string, string[]> }) {
     return (
@@ -22,7 +25,9 @@ export default async function Home() {
     return (
         <div className="m-[1.5em] flex-col justify-items-center">
             <a href={"https://files.servermaksa.ru/2025-09-09_20-05-14.mp4"} className={"flex justify-center text-2xl w-full font-montserrat mb-7"}>Собрание по ВКРБ</a>
+            <Suspense fallback={<Loading />}>
                 <SubjectList directories={ directories } />
+            </Suspense>
         </div>
 );
 }
