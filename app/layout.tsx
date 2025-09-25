@@ -8,6 +8,7 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 import Link from "next/link";
 import {HiOutlineSun as SunIcon} from "react-icons/hi";
 import { Suspense } from "react";
+import Loading from "./components/Loading";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -15,6 +16,7 @@ const montserrat = Montserrat({
 });
 
 const monocraft= Monocraft({
+    variable: "--font-monocraft",
     src: "./Monocraft.ttf",
 })
 
@@ -44,7 +46,7 @@ export default function RootLayout({
                 <Providers><ThemeSwitcher /></Providers>
             </div>
         </header>
-        <Suspense>{children}</Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
         <footer className={"flex w-full"}>
             <div className={"justify-start items-center m-2"}>
                 <a href={"https://archive.onanists.ru"} className={"align-middle font-montserrat"}>

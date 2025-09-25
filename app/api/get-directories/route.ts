@@ -12,7 +12,7 @@ export async function GET() {
         if (directories.get(splitPath[0]) === undefined) { directories.set(splitPath[0], []) }
         directories.get(splitPath[0])!.push(splitPath[1].split(".").slice(0, -1).join('.'));
     })
-    return Response.json({ directories: directories , status: 200, statusText: "OK" });
+    return Response.json({ directories: JSON.stringify(Object.fromEntries(directories)) , status: 200, statusText: "OK" });
 }
 
 

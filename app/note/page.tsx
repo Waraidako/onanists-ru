@@ -47,9 +47,10 @@ export default function Page()  {
     const fetchData = async () => {
         await getNote();
         const subject = notePath!.split('/')[0];
-        const request = await fetch('api/get-filenames?dir=' + encodeURIComponent(subject));
+        const request = await fetch('api/get-directories');
         const json = await request.json();
-        const filenames = json.files;
+        const directories: Map<string, string[]> = new Map(Object.entries(JSON.parse(json.directories)));
+        const filenames: string[] = directories.get(subject)!;
         const noteName = notePath!.split('/')[1];
         const noteIndex = filenames.indexOf(noteName);
         if (noteIndex > 0) setPrevPath(subject + '/' + filenames[noteIndex - 1])
