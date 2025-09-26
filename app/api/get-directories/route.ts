@@ -1,4 +1,3 @@
-//import { parseNoteFileNames } from "@/app/utils/DirectoryParser";
 import { Obsidian } from "../../utils/obsidian";
 
 export async function GET() {

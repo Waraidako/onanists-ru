@@ -7,6 +7,8 @@ import { useState } from "react";
 import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 
+const ttl = 3600000;
+
 const renderHeader = `<link 
     rel="stylesheet" 
     href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" 
@@ -33,7 +35,7 @@ export default function Page()  {
         window.location.replace('/piss');
     }
 
-    const [ note, setNote ] = useState("");
+    const [ note, setNote ] = useState('');
     const [ nextPath, setNextPath ] = useState('');
     const [ prevPath, setPrevPath ] = useState('');
 
@@ -45,11 +47,21 @@ export default function Page()  {
     }
 
     const fetchData = async () => {
-        await getNote();
         const subject = notePath!.split('/')[0];
-        const request = await fetch('api/get-directories');
-        const json = await request.json();
-        const directories: Map<string, string[]> = new Map(Object.entries(JSON.parse(json.directories)));
+
+        const cookie = localStorage.getItem('directories');
+        const currentTime = new Date().getTime();
+        let json: string = '';
+        if (cookie === null || JSON.parse(cookie).expiresOn < currentTime) {
+            const request = await fetch('api/get-directories');
+            json = (await request.json()).directories;
+            const cookie = { data: json, expiresOn: new Date().getTime() + ttl };
+            localStorage.setItem("directories", JSON.stringify(cookie));
+        } else {
+            json = JSON.parse(cookie).data;
+        }
+
+        const directories: Map<string, string[]> = new Map(Object.entries(JSON.parse(json)));
         const filenames: string[] = directories.get(subject)!;
         const noteName = notePath!.split('/')[1];
         const noteIndex = filenames.indexOf(noteName);
@@ -74,6 +86,7 @@ export default function Page()  {
 
     useEffect(() => {
         fetchData();
+        getNote();
         
         const interval = setInterval(getNote, 750);
         return () => clearInterval(interval);
