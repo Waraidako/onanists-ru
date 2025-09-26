@@ -23,13 +23,14 @@ export default function Home() {
     const [ directories, setDirectories ] = useState<Map<string, string[]>>();
 
     const fetchData = async () => {
-        const req = await fetch("http://localhost:3000/api/get-directories");
+        const req = await fetch("/api/get-directories");
         const json = await req.json();
         setDirectories(new Map(Object.entries(JSON.parse(json.directories))));
         const cookie = { data: json.directories, expiresOn: new Date().getTime() + ttl };
         localStorage.setItem("directories", JSON.stringify(cookie));
         // ^ A whole lot of hoopla up there lmao
     }
+
     useEffect(() => {
         fetchData();
     }, [])
