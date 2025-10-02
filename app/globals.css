@@ -111,7 +111,7 @@ button {
 .hrefbutton:hover {
   color: var(--background);
   scale: 1.1;
-  box-shadow: 0 0px 20px rgba(92, 138, 245, 0.4);
+  box-shadow: 0 0 20px rgba(92, 138, 245, 0.4);
 }
 
 .hrefbutton:active {
@@ -265,4 +265,19 @@ h6 {
 
 .nextprevbutton:not(:disabled):active {
   transform: translateY(.125rem);
+}
+
+@media print {
+  header, footer {
+    display: none !important;
+  }
+
+  p {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+@page {
+  size: A4;
 }

@@ -97,6 +97,14 @@ export default function Page()  {
     return (
         <div className={"flex justify-center"}>
             <div className={styles.note}>
+                <div className={"print:hidden"}>
+                    <button
+                        className={` nextprevbutton flex justify-center w-full text-2xl font-montserrat `}
+                        role={'button'}
+                        onClick={() => window.print()}>
+                            Печать в PDF
+                    </button>
+                </div>
                 <h1 className={"flex justify-center"}>{notePath!.split('/')[0]}</h1>
                 <h2 className={"flex justify-center"}>{notePath!.split('/')[1]}</h2>
                 {
@@ -104,7 +112,7 @@ export default function Page()  {
                         ?
                             <div className={styles.note}>
                             <div dangerouslySetInnerHTML={{__html: renderHeader + appendLinks(marked.parse(note, { async: false }))}} />
-                            <div className={"flex w-full"}>
+                            <div className={"flex w-full print:hidden"}>
                                 {
                                     prevPath
                                         ? <div className="flex w-1/2 mr-1 justify-center">

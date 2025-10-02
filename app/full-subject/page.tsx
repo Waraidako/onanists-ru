@@ -91,18 +91,27 @@ export default function Page() {
 
     return (
         <div className={"flex justify-center"}>
-            <div className={styles.fullsubject}>
-            <h1 className={"flex justify-center"}>{subjectName}</h1>
-            {
-                noteNamesArray.map((noteName: string, index: number) => {
-                    return (
-                        <div key={index} className={ styles.fullsubject }>
-                            <h2 className={"flex justify-center"}>{noteName}</h2>
-                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : ""}}/>
-                        </div>
-                    )
-                })
-            }
+            <div className={ styles.fullsubject }>
+                <div className={"print:hidden"}>
+                    <button
+                        className={` nextprevbutton flex justify-center w-full text-2xl font-montserrat `}
+                        role={'button'}
+                        onClick={() => window.print()}>
+                        Печать в PDF
+                    </button>
+                </div>
+                <h1 className={"flex justify-center"}>{subjectName}</h1>
+                {
+                     noteNamesArray.map((noteName: string, index: number) => {
+                        return (
+                            <div key={index} className={ `${styles.fullsubject} ${noteName === 'README' ? 'print:hidden' : ''}`}>
+                                <h2 className={"flex justify-center"}>{noteName}</h2>
+                                <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : "",}}
+                                     className={ styles.fullsubject + "m-0 wrap-break-word" }/>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
     )
