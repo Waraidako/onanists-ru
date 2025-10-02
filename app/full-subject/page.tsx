@@ -91,7 +91,7 @@ export default function Page() {
 
     return (
         <div className={"flex justify-center"}>
-            <div>
+            <div className={styles.fullsubject}>
             <h1 className={"flex justify-center"}>{subjectName}</h1>
             {
                 noteNamesArray.map((noteName: string, index: number) => {
