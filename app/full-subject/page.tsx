@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import { marked } from 'marked';
 import markedKatex from 'marked-katex-extension';
 
+const ttl = 3600000;
+
 const renderHeader = `<link 
     rel="stylesheet" 
     href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" 
@@ -35,13 +37,31 @@ export default function Page() {
     }
 
     async function fetchData() {
-        const request = await fetch('/api/get-filenames?dir=' + encodeURIComponent(subjectName!));
-        const json = await request.json();
-        const noteNames = json.files;
+        // const request = await fetch('/api/get-filenames?dir=' + encodeURIComponent(subjectName!));
+        // const json = await request.json();
+        // const noteNames = json.files;
+        // setNoteNamesArray(noteNames);
+
+        const cookie = localStorage.getItem('directories');
+        const currentTime = new Date().getTime();
+        let json: string = '';
+        if (cookie === null || JSON.parse(cookie).expiresOn < currentTime) {
+            const request = await fetch('api/get-directories');
+            json = (await request.json()).directories;
+            const cookie = { data: json, expiresOn: new Date().getTime() + ttl };
+            localStorage.setItem("directories", JSON.stringify(cookie));
+        } else {
+            json = JSON.parse(cookie).data;
+        }
+        console.log(json);
+        const directories: Map<string, string[]> = new Map(Object.entries(JSON.parse(json)));
+        console.log('fully parsed');
+        const noteNames: string[] = directories.get(subjectName!)!;
         setNoteNamesArray(noteNames);
 
         const notesPromises = noteNames.map(async (noteName: string) => {
             const req = await fetch('/api/get-note?path=' + encodeURIComponent(subjectName + '/' + noteName));
+            //console.log(await req);
             const notejson = await req.json();
             return notejson.noteText;
         })
