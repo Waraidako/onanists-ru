@@ -96,9 +96,9 @@ export default function Page() {
             {
                 noteNamesArray.map((noteName: string, index: number) => {
                     return (
-                        <div key={index}>
+                        <div key={index} className={ styles.fullsubject }>
                             <h2 className={"flex justify-center"}>{noteName}</h2>
-                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : ""}} className={styles.fullsubject}/>
+                            <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : ""}}/>
                         </div>
                     )
                 })
