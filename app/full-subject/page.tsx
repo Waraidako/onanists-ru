@@ -107,7 +107,7 @@ export default function Page() {
                             <div key={index} className={ `${styles.fullsubject} ${noteName === 'README' ? 'print:hidden' : ''}`}>
                                 <h2 className={"flex justify-center"}>{noteName}</h2>
                                 <div dangerouslySetInnerHTML={{__html: notesArray[index] ? renderHeader + appendLinks(marked.parse(notesArray[index], { async: false })) : "",}}
-                                     className={ styles.fullsubject + "m-0 wrap-break-word" }/>
+                                     className={ styles.fullsubject + "m-0 wrap-break-word break-after-page" }/>
                             </div>
                         )
                     })
